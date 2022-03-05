@@ -12,7 +12,6 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { SearchFacturasComponent } from './components/search-facturas/search-facturas.component';
 import { AddEditFacturasComponent } from './components/add-edit-facturas/add-edit-facturas.component';
 import { FilterNamePipe } from './pipes/filter-name.pipe';
-import { FilterDatePipe } from './pipes/filter-date.pipe';
 
 @NgModule({
   declarations: [
@@ -22,7 +21,6 @@ import { FilterDatePipe } from './pipes/filter-date.pipe';
     SearchFacturasComponent,
     AddEditFacturasComponent,
     FilterNamePipe,
-    FilterDatePipe,
   ],
   imports: [
     BrowserModule,
