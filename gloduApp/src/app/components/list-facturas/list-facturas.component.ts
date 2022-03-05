@@ -1,13 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { ServicesEntitysService } from '../../services/services-entitys.service';
-import { Facturas } from '../../models/facturas';
-
-export interface PeriodicElement {
-  name: string;
-  position: number;
-  weight: number;
-  symbol: string;
-}
+import { Factura } from '../../models/factura';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
+import { ActivatedRoute } from '@angular/router';
+import { FormControl, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-list-facturas',
@@ -15,32 +12,20 @@ export interface PeriodicElement {
   styleUrls: ['./list-facturas.component.scss'],
 })
 export class ListFacturasComponent implements OnInit {
+  public facturas: Factura[] = [];
+  public filterDates: Factura[] = [];
+  filterSend = '';
+  filterDate = '';
+
+  @ViewChild(MatPaginator)
+  paginator!: MatPaginator;
   selectedValue: any;
   selectedCar: any;
 
-  foods = [
-    { value: 'steak-0', viewValue: 'Steak' },
-    { value: 'pizza-1', viewValue: 'Pizza' },
-    { value: 'tacos-2', viewValue: 'Tacos' },
-  ];
-
-  cars = [
-    { value: 'volvo', viewValue: 'Volvo' },
-    { value: 'saab', viewValue: 'Saab' },
-    { value: 'mercedes', viewValue: 'Mercedes' },
-  ];
-
-  public facturas: Facturas[] = [];
-  dataSource: any;
-
-  displayedColumns: string[] = [
-    'id',
-    'folio',
-    'description',
-    'fecha',
-    'clientName',
-    'acciones',
-  ];
+  range = new FormGroup({
+    start: new FormControl(),
+    end: new FormControl(),
+  });
 
   constructor(private service: ServicesEntitysService) {}
 
@@ -48,8 +33,39 @@ export class ListFacturasComponent implements OnInit {
     this.getFactur();
   }
 
+  filterByDate() {
+    this.facturas = this.service.getFacturas();
+    if (
+      this.range.controls.start.valid &&
+      this.range.controls.end.valid &&
+      this.range.value.start != null &&
+      this.range.value.end
+    ) {
+      this.filterDates = this.facturas.filter((factura) => {
+        if (
+          factura.fecha.getTime() >=
+            this.range.controls.start.value.getTime() &&
+          factura.fecha.getTime() <= this.range.controls.end.value.getTime()
+        ) {
+          this.facturas = this.filterDates;
+        }
+      });
+    } else {
+      this.facturas = [];
+    }
+  }
+
+  removeFilter() {
+    this.range.controls.start.reset();
+    this.range.controls.end.reset();
+  }
+
   getFactur() {
     this.facturas = this.service.getFacturas();
-    this.dataSource = this.facturas;
+  }
+  deleteFactura(idx: number) {
+    this.service.deleteFactura(idx);
+    this.getFactur();
+    console.log(idx);
   }
 }

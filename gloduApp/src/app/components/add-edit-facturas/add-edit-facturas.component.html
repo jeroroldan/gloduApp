@@ -1,1 +1,66 @@
-<p>add-edit-facturas works!</p>
+<div class="container mt-5">
+  <h2>{{action}}</h2>
+  <mat-card>
+    <div class="row">
+      <div class="col-md">
+        <h2>Datos Generales</h2>
+      </div>
+      <div class="col-md-1 gap-2 d-md-flex justify-content-md-end" style="cursor: pointer;">
+        <span class="material-icons">
+          expand_more
+        </span>
+      </div>
+      <hr>
+    </div>
+    <form [formGroup]="myForm">
+      <div class="row">
+        <div class="col-md-4">
+          <h3>Nombre</h3>
+          <mat-form-field class="mb-1 w-100">
+            <mat-label>Nombre...</mat-label>
+            <input type="text" matInput class="mb-2" formControlName="folio">
+          </mat-form-field>
+        </div>
+        <div class="col-md-4">
+          <h3>Descripcion</h3>
+          <mat-form-field class="mb-1 w-100">
+            <mat-label>Descripcion</mat-label>
+            <input type="text" matInput class="mb-2" formControlName="description">
+          </mat-form-field>
+        </div>
+        <div class="col-md-4">
+          <h3>Fecha: </h3>
+          <mat-form-field class="example-container" appearance="fill">
+            <mat-label>Choose a date</mat-label>
+            <input matInput [matDatepicker]="picker" formControlName="fecha">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker touchUi #picker></mat-datepicker>
+          </mat-form-field>
+        </div>
+        <div class="row">
+          <div class="col-md-4">
+            <h3>Nombre de Cliente</h3>
+            <mat-form-field class="mb-1 w-100">
+              <mat-label>Nombre de Cliente</mat-label>
+              <input type="text" matInput class="mb-2" formControlName="clientName">
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+    </form>
+  </mat-card>
+  <div class="row title-page mt-5">
+    <div class="col-md">
+      <button mat-raised-button color="primary" routerLink="/list">
+        <span class="material-icons">
+          arrow_back
+        </span>Volver
+      </button>
+    </div>
+    <div class="col-md-1">
+      <button class="mat-success" mat-raised-button color="succes" [disabled]="myForm.invalid" (click)="save()">
+        <mat-icon>save</mat-icon>Guardar
+      </button>
+    </div>
+  </div>
+</div>

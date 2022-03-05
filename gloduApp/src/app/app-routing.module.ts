@@ -5,11 +5,11 @@ import { AddEditFacturasComponent } from './components/add-edit-facturas/add-edi
 import { SearchFacturasComponent } from './components/search-facturas/search-facturas.component';
 
 const routes: Routes = [
-  { path: '', component: ListFacturasComponent },
+  { path: '', component: ListFacturasComponent, pathMatch: 'full' },
   { path: 'add', component: AddEditFacturasComponent },
   { path: 'searchFacturas', component: SearchFacturasComponent },
   { path: 'edit/:id', component: AddEditFacturasComponent },
-  { path: '**', component: ListFacturasComponent },
+  { path: '**', redirectTo: '' },
 ];
 
 @NgModule({
