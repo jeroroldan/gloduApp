@@ -12,6 +12,7 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { SearchFacturasComponent } from './components/search-facturas/search-facturas.component';
 import { AddEditFacturasComponent } from './components/add-edit-facturas/add-edit-facturas.component';
 import { FilterNamePipe } from './pipes/filter-name.pipe';
+import { MessageConfirmComponent } from './components/message-confirm/message-confirm.component';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { FilterNamePipe } from './pipes/filter-name.pipe';
     SearchFacturasComponent,
     AddEditFacturasComponent,
     FilterNamePipe,
+    MessageConfirmComponent,
   ],
   imports: [
     BrowserModule,

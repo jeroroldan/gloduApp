@@ -5,6 +5,10 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute } from '@angular/router';
 import { FormControl, FormGroup } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
+import { MessageConfirmComponent } from '../message-confirm/message-confirm.component';
+
+type NewType = MatDialog;
 
 @Component({
   selector: 'app-list-facturas',
@@ -27,7 +31,10 @@ export class ListFacturasComponent implements OnInit {
     end: new FormControl(),
   });
 
-  constructor(private service: ServicesEntitysService) {}
+  constructor(
+    private service: ServicesEntitysService,
+    public dialog: MatDialog
+  ) {}
 
   ngOnInit(): void {
     this.getFactur();
@@ -64,8 +71,15 @@ export class ListFacturasComponent implements OnInit {
     this.facturas = this.service.getFacturas();
   }
   deleteFactura(idx: number) {
-    this.service.deleteFactura(idx);
-    this.getFactur();
-    console.log(idx);
+    const dialogRef = this.dialog.open(MessageConfirmComponent, {
+      width: '350px',
+      data: { message: 'Está  seguro que desea eliminar el empleado?' },
+    });
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result === 'Aceptar') {
+        this.service.deleteFactura(idx);
+        this.getFactur();
+      }
+    });
   }
 }
